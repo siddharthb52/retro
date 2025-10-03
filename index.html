@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retro Music Experience</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Landing Page -->
+        <div id="landing-page" class="page active">
+            <div class="floating-notes">
+                <div class="note">♪</div>
+                <div class="note">♫</div>
+                <div class="note">♬</div>
+                <div class="note">♩</div>
+                <div class="note">♪</div>
+                <div class="note">♫</div>
+            </div>
+            
+            <div class="landing-content">
+                <h1>Retro Music Experience</h1>
+                <p>Choose your scene and start your musical journey</p>
+                
+                <div class="controls">
+                    <div class="scene-selector">
+                        <label for="scene-select">Select Scene:</label>
+                        <select id="scene-select">
+                            <option value="">Choose a scene...</option>
+                            <option value="record-player">Scene 1: Record Player</option>
+                            <option value="jukebox">Scene 2: Jukebox</option>
+                            <option value="car-radio">Scene 3: Car Radio</option>
+                        </select>
+                    </div>
+                    
+                    <button id="add-records-btn" class="btn">Add Records</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scene 1: Record Player -->
+        <div id="record-player" class="page scene">
+            <div class="fire-background"></div>
+            
+            <div class="mahogany-table">
+                <div class="record-player" id="record-player-element">
+                    <div class="vinyl-record" id="vinyl">
+                        <div class="record-label">Change Record</div>
+                    </div>
+                    <div class="controls-overlay">
+                        <button class="control-btn" id="play-btn">▶</button>
+                        <button class="control-btn" id="pause-btn">⏸</button>
+                        <button class="control-btn" id="back-btn">⏮</button>
+                        <button class="control-btn" id="forward-btn">⏭</button>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="back-btn" id="back-to-landing">← Back to Landing</button>
+        </div>
+        
+        <!-- Scene 2: Jukebox -->
+        <div id="jukebox" class="page scene">
+            <h2>Jukebox Scene</h2>
+            <p>Coming soon...</p>
+            <button class="back-btn" id="jukebox-back">← Back to Landing</button>
+        </div>
+        
+        <!-- Scene 3: Car Radio -->
+        <div id="car-radio" class="page scene">
+            <h2>Car Radio Scene</h2>
+            <p>Coming soon...</p>
+            <button class="back-btn" id="car-radio-back">← Back to Landing</button>
+        </div>
+        
+        <!-- Records List Modal -->
+        <div id="records-modal" class="modal">
+            <div class="modal-content">
+                <h3>Select a Record</h3>
+                <div id="records-list"></div>
+                <button class="close-btn" id="close-records">Close</button>
+            </div>
+        </div>
+        
+        <!-- File Input for Adding Records -->
+        <input type="file" id="file-input" multiple accept=".mp3" style="display: none;">
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
