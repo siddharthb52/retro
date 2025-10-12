@@ -38,7 +38,7 @@ const tracks = [
   };
 
   
-  const DEFAULT_LABEL = "assets/covers/oldies.jpg";
+  const DEFAULT_LABEL = "assets/covers/oldies.png";
 
   
   let i = 0;

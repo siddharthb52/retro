@@ -22,7 +22,7 @@ input[type="range"]{width:50%}
 @keyframes spin{to{transform:rotate(360deg)}}
 
 body.has-bg {
-    background: #0b0b0b url("assets/white.jpg");
+    background: #0b0b0b url("../assets/gradient-bg.png") center / cover fixed no-repeat;
   }
   
   /* Vinyl container setup */
@@ -43,7 +43,7 @@ body.has-bg {
   #label {
     position: absolute;
     left: 50%; top: 50%;
-    width: 30%; height: 30%;
+    width: 50%; height: 50%;
     transform: translate(-50%, -50%);
     border-radius: 50%;
     object-fit: cover;
