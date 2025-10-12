@@ -10,7 +10,7 @@ const tracks = [
       title: "Let's Groove",
       artist: "Earth, Wind & Fire",
       src: "music/oldies_usa/Let's Groove.mp3",
-      cover: "assets/covers/lets-groove.jpg"
+      cover: "assets/covers/lets-groove.png"
     },
     {
       title: "You Know How to Love Me (Long Version)",
