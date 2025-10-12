@@ -1,262 +1,99 @@
-// Global variables
-let currentScene = 'landing';
-let audioContext;
-let currentAudio = null;
-let records = [];
-let currentTrackIndex = 0;
-
-// DOM elements - will be initialized after DOM loads
-let sceneSelect, addRecordsBtn, fileInput, recordsModal, recordsList, closeRecordsBtn;
-let vinyl, playBtn, pauseBtn, backBtn, forwardBtn;
-
-// Initialize the application
-document.addEventListener('DOMContentLoaded', function() {
-    initializeDOMElements();
-    initializeEventListeners();
-    loadRecordsFromFolder();
-    // Ensure landing page is shown initially
-    showScene('landing');
-});
-
-// Initialize DOM elements after DOM loads
-function initializeDOMElements() {
-    sceneSelect = document.getElementById('scene-select');
-    addRecordsBtn = document.getElementById('add-records-btn');
-    fileInput = document.getElementById('file-input');
-    recordsModal = document.getElementById('records-modal');
-    recordsList = document.getElementById('records-list');
-    closeRecordsBtn = document.getElementById('close-records');
-    vinyl = document.getElementById('vinyl');
-    playBtn = document.getElementById('play-btn');
-    pauseBtn = document.getElementById('pause-btn');
-    backBtn = document.getElementById('back-btn');
-    forwardBtn = document.getElementById('forward-btn');
-}
-
-// Event Listeners
-function initializeEventListeners() {
-    // Scene navigation
-    sceneSelect.addEventListener('change', handleSceneChange);
-    
-    // Add records functionality
-    addRecordsBtn.addEventListener('click', () => fileInput.click());
-    fileInput.addEventListener('change', handleFileUpload);
-    
-    // Records modal
-    closeRecordsBtn.addEventListener('click', closeRecordsModal);
-    
-    // Record player controls
-    vinyl.addEventListener('click', openRecordsModal);
-    playBtn.addEventListener('click', playTrack);
-    pauseBtn.addEventListener('click', pauseTrack);
-    backBtn.addEventListener('click', previousTrack);
-    forwardBtn.addEventListener('click', nextTrack);
-    
-    // Back buttons
-    document.getElementById('back-to-landing').addEventListener('click', () => showScene('landing'));
-    document.getElementById('jukebox-back').addEventListener('click', () => showScene('landing'));
-    document.getElementById('car-radio-back').addEventListener('click', () => showScene('landing'));
-}
-
-// Scene Management
-function handleSceneChange(event) {
-    const selectedScene = event.target.value;
-    if (selectedScene) {
-        showScene(selectedScene);
+// Exact file list:
+const tracks = [
+    {
+      title: "Every Night (1980) [Japanese AOR]",
+      artist: "Mariya Takeuchi",
+      src: "music/citypop/Mariya Takeuchi - Every Night (1980) [Japanese AOR].mp3",
+       cover: "assets/covers/miss-m.jpg"
+    },
+    {
+      title: "Let's Groove",
+      artist: "Earth, Wind & Fire",
+      src: "music/oldies_usa/Let's Groove.mp3",
+      cover: "assets/covers/lets-groove.jpg"
+    },
+    {
+      title: "You Know How to Love Me (Long Version)",
+      artist: "Phyllis Hyman",
+      src: "music/oldies_usa/You Know How to Love Me (Long Version).mp3"
+    },
+    {
+      title: "Ooh Baby Baby (12 Inch Version)",
+      artist: "Zapp",
+      src: "music/oldies_usa/Zapp - Ooh Baby Baby (12 Inch Version).mp3"
     }
-}
+  ];
+  
+  const els = {
+    list: document.querySelector('#tracklist'),
+    audio: document.querySelector('#audio'),
+    play: document.querySelector('#play'),
+    prev: document.querySelector('#prev'),
+    next: document.querySelector('#next'),
+    seek: document.querySelector('#seek'),
+    title: document.querySelector('#title'),
+    artist: document.querySelector('#artist'),
+    vinyl: document.querySelector('#vinyl'),
+    label: document.querySelector('#label'),
+  };
 
-function showScene(sceneId) {
-    // Hide all scenes first
-    document.querySelectorAll('.page').forEach(page => {
-        page.classList.remove('active');
-    });
-    
-    // Show selected scene
-    const targetScene = document.getElementById(sceneId);
-    if (targetScene) {
-        targetScene.classList.add('active');
-        currentScene = sceneId;
-        
-        // Reset scene selector if going back to landing
-        if (sceneId === 'landing') {
-            sceneSelect.value = '';
-        }
-    }
-}
+  
+  const DEFAULT_LABEL = "assets/covers/oldies.jpg";
 
-// Records Management
-function handleFileUpload(event) {
-    const files = event.target.files;
-    
-    for (let file of files) {
-        if (file.type.startsWith('audio/')) {
-            const record = {
-                name: file.name.replace('.mp3', ''),
-                file: file,
-                url: URL.createObjectURL(file)
-            };
-            records.push(record);
-        }
-    }
-    
-    // Update records list
-    updateRecordsList();
-    
-    // Clear file input
-    event.target.value = '';
-    
-    // Show success message
-    alert(`Added ${files.length} record(s) to your collection!`);
-}
-
-function loadRecordsFromFolder() {
-    // In a real application, this would scan the music/oldies_usa folder
-    // For now, we'll use placeholder records
-    records = [
-        { name: "Sample Track 1", url: null, isPlaceholder: true },
-        { name: "Sample Track 2", url: null, isPlaceholder: true },
-        { name: "Sample Track 3", url: null, isPlaceholder: true }
-    ];
-    updateRecordsList();
-}
-
-function updateRecordsList() {
-    recordsList.innerHTML = '';
-    
-    records.forEach((record, index) => {
-        const recordItem = document.createElement('div');
-        recordItem.className = 'record-item';
-        recordItem.innerHTML = `
-            <span>${record.name}</span>
-            <button class="play-record-btn" data-index="${index}">▶</button>
-        `;
-        
-        // Add click event for playing the record
-        const playBtn = recordItem.querySelector('.play-record-btn');
-        playBtn.addEventListener('click', () => selectRecord(index));
-        
-        recordsList.appendChild(recordItem);
-    });
-}
-
-// Record Selection and Playback
-function openRecordsModal() {
-    recordsModal.style.display = 'block';
-    playRecordChangeSound();
-}
-
-function closeRecordsModal() {
-    recordsModal.style.display = 'none';
-}
-
-function selectRecord(index) {
-    currentTrackIndex = index;
-    const record = records[index];
-    
-    if (record.isPlaceholder) {
-        alert('This is a placeholder track. Please add your own MP3 files using the "Add Records" button.');
-        return;
-    }
-    
-    // Close modal and start playing
-    closeRecordsModal();
-    
-    if (currentAudio) {
-        currentAudio.pause();
-    }
-    
-    // Create new audio element
-    currentAudio = new Audio(record.url);
-    currentAudio.play();
-    
-    // Update UI to show playing state
-    vinyl.classList.add('playing');
-    
-    // Audio ended event
-    currentAudio.addEventListener('ended', () => {
-        vinyl.classList.remove('playing');
-        currentAudio = null;
-    });
-}
-
-// Audio Controls
-function playTrack() {
-    if (currentAudio && currentAudio.paused) {
-        currentAudio.play();
-        vinyl.classList.add('playing');
-    }
-}
-
-function pauseTrack() {
-    if (currentAudio && !currentAudio.paused) {
-        currentAudio.pause();
-        vinyl.classList.remove('playing');
-    }
-}
-
-function previousTrack() {
-    if (records.length > 0) {
-        currentTrackIndex = (currentTrackIndex - 1 + records.length) % records.length;
-        selectRecord(currentTrackIndex);
-    }
-}
-
-function nextTrack() {
-    if (records.length > 0) {
-        currentTrackIndex = (currentTrackIndex + 1) % records.length;
-        selectRecord(currentTrackIndex);
-    }
-}
-
-// Sound Effects
-function playRecordChangeSound() {
-    // Create a simple record change sound effect
-    if (!audioContext) {
-        audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    }
-    
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
-    
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-    
-    oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
-    oscillator.frequency.exponentialRampToValueAtTime(400, audioContext.currentTime + 0.1);
-    
-    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
-    
-    oscillator.start(audioContext.currentTime);
-    oscillator.stop(audioContext.currentTime + 0.1);
-}
-
-// Close modal when clicking outside
-window.addEventListener('click', function(event) {
-    if (event.target === recordsModal) {
-        closeRecordsModal();
-    }
-});
-
-// Keyboard shortcuts
-document.addEventListener('keydown', function(event) {
-    if (currentScene === 'record-player') {
-        switch(event.code) {
-            case 'Space':
-                event.preventDefault();
-                if (currentAudio && currentAudio.paused) {
-                    playTrack();
-                } else {
-                    pauseTrack();
-                }
-                break;
-            case 'ArrowLeft':
-                previousTrack();
-                break;
-            case 'ArrowRight':
-                nextTrack();
-                break;
-        }
-    }
-});
+  
+  let i = 0;
+  
+  // Building a clickable list from the array above
+  els.list.innerHTML = tracks.map((t, n) =>
+    `<button data-n="${n}">${t.title} — ${t.artist}</button>`).join('');
+  els.list.addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    playIndex(Number(b.dataset.n));
+  });
+  
+  function load(n){
+    i = (n + tracks.length) % tracks.length;
+    const t = tracks[i];
+    els.audio.src = t.src;
+    els.title.textContent = t.title;
+    els.artist.textContent = t.artist;
+    els.label.src = t.cover || DEFAULT_LABEL;
+  }
+  
+  function playIndex(n){
+    load(n);
+    els.audio.play();
+  }
+  
+  // Controls
+  els.play.onclick = () => els.audio.paused ? els.audio.play() : els.audio.pause();
+  els.prev.onclick = () => playIndex(i - 1);
+  els.next.onclick = () => playIndex(i + 1);
+  
+  // UI reactions
+  els.audio.onplay = () => { els.play.textContent = '⏸'; els.vinyl.classList.add('playing'); };
+  els.audio.onpause = () => { els.play.textContent = '▶️'; els.vinyl.classList.remove('playing'); };
+  
+  els.audio.ontimeupdate = () => {
+    if (!els.audio.duration) return;
+    els.seek.value = Math.floor(100 * els.audio.currentTime / els.audio.duration);
+  };
+  els.seek.oninput = () => {
+    if (!els.audio.duration) return;
+    els.audio.currentTime = els.audio.duration * (els.seek.value / 100);
+  };
+  
+  // Keyboard shortcuts
+  window.addEventListener('keydown', (e) => {
+    const k = e.key.toLowerCase();
+    if (k === ' ') { e.preventDefault(); els.play.click(); }
+    if (k === 'arrowright') els.audio.currentTime += 5;
+    if (k === 'arrowleft') els.audio.currentTime -= 5;
+    if (k === 'n') els.next.click();
+    if (k === 'p') els.prev.click();
+  });
+  
+  // Load first song (don’t autoplay)
+  load(0);
+  
+  document.body.classList.add('has-bg');
