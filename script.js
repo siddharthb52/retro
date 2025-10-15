@@ -15,12 +15,14 @@ const tracks = [
     {
       title: "You Know How to Love Me (Long Version)",
       artist: "Phyllis Hyman",
-      src: "music/oldies_usa/You Know How to Love Me (Long Version).mp3"
+      src: "music/oldies_usa/You Know How to Love Me (Long Version).mp3",
+      cover: "assets/covers/you-know-how-to-love-me.png"
     },
     {
       title: "Ooh Baby Baby (12 Inch Version)",
       artist: "Zapp",
-      src: "music/oldies_usa/Zapp - Ooh Baby Baby (12 Inch Version).mp3"
+      src: "music/oldies_usa/Zapp - Ooh Baby Baby (12 Inch Version).mp3",
+      cover: "assets/covers/ooh-baby-baby-zapp.png"
     }
   ];
   
