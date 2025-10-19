@@ -10,13 +10,71 @@ body{margin:0;background:#0b0b0b;color:var(--fg);font-family:system-ui,sans-seri
 
 .player{display:grid;gap:10px;align-content:start;justify-items:center}
 .meta{text-align:center}
-.controls{display:flex;gap:8px;align-items:center;justify-content:center}
-input[type="range"]{width:50%}
+.controls{display:flex;gap:12px;align-items:center;justify-content:center}
+.controls button{
+  background:#222;
+  border:1px solid #444;
+  border-radius:50%;
+  width:48px;
+  height:48px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#f5efe6;
+  cursor:pointer;
+  transition:all 0.2s ease;
+}
+.controls button:hover{
+  background:#333;
+  border-color:#666;
+  transform:scale(1.05);
+}
+.controls button:active{
+  transform:scale(0.95);
+}
+.seek-container{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  width:100%;
+  max-width:400px;
+}
+.seek-container span{
+  font-family:monospace;
+  font-size:14px;
+  color:#888;
+  min-width:40px;
+  text-align:center;
+}
+input[type="range"]{
+  flex:1;
+  height:6px;
+  background:#333;
+  border-radius:3px;
+  outline:none;
+  cursor:pointer;
+}
+input[type="range"]::-webkit-slider-thumb{
+  appearance:none;
+  width:16px;
+  height:16px;
+  background:#f5efe6;
+  border-radius:50%;
+  cursor:pointer;
+}
+input[type="range"]::-moz-range-thumb{
+  width:16px;
+  height:16px;
+  background:#f5efe6;
+  border-radius:50%;
+  border:none;
+  cursor:pointer;
+}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes counterSpin{to{transform:rotate(-360deg)}}
 
 body.has-bg {
-    background: #0b0b0b url("../assets/brown-bg.png") center / cover fixed no-repeat;
+    background: #0b0b0b url("../assets/wood2-bg.png") center / cover fixed no-repeat;
   }
   
   /* Vinyl container setup */
@@ -29,10 +87,21 @@ body.has-bg {
       radial-gradient(circle at 50% 50%, #3a3a3a 0 12%, transparent 12% 13%),
       repeating-radial-gradient(circle at 50% 50%, #000 0 2px, #0a0a0a 2px 4px);
     animation: spin 3.5s linear infinite paused;
+    box-shadow: 0 0 30px #0008 inset; /* Only inner shadow rotates */
+  }
+  
+  /* Static shadow that doesn't rotate */
+  .vinyl::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 50%;
+    background: transparent;
     box-shadow: 
-      0 0 30px #0008 inset,
       0 8px 25px rgba(0, 0, 0, 0.4),
       0 4px 12px rgba(0, 0, 0, 0.2);
+    pointer-events: none;
+    z-index: -1; /* Behind the vinyl */
   }
   .vinyl.playing { animation-play-state: running; }
   
@@ -90,9 +159,8 @@ body.has-bg {
     animation-play-state: running;
   }
 
-  /* Small center hole */
-  .vinyl::after {
-    content: "";
+  /* Small center hole - using a separate element */
+  .vinyl .center-hole {
     position: absolute;
     left: 50%; top: 50%;
     width: 12px; height: 12px;

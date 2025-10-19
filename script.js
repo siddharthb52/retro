@@ -37,11 +37,22 @@ const tracks = [
     artist: document.querySelector('#artist'),
     vinyl: document.querySelector('#vinyl'),
     label: document.querySelector('#label'),
+    currentTime: document.querySelector('#current-time'),
+    totalTime: document.querySelector('#total-time'),
+    playIcon: document.querySelector('#play-icon'),
+    pauseIcon: document.querySelector('#pause-icon'),
   };
 
   
   const DEFAULT_LABEL = "assets/vinyl/oldies.png";
 
+  // Time formatting function
+  function formatTime(seconds) {
+    if (isNaN(seconds) || !isFinite(seconds)) return '0:00';
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  }
   
   let i = 0;
   
@@ -60,6 +71,10 @@ const tracks = [
     els.title.textContent = t.title;
     els.artist.textContent = t.artist;
     els.label.src = t.vinyl || DEFAULT_LABEL;
+    
+    // Reset time display
+    els.currentTime.textContent = '0:00';
+    els.totalTime.textContent = '0:00';
   }
   
   function playIndex(n){
@@ -73,12 +88,25 @@ const tracks = [
   els.next.onclick = () => playIndex(i + 1);
   
   // UI reactions
-  els.audio.onplay = () => { els.play.textContent = '⏸'; els.vinyl.classList.add('playing'); };
-  els.audio.onpause = () => { els.play.textContent = '▶️'; els.vinyl.classList.remove('playing'); };
+  els.audio.onplay = () => { 
+    els.playIcon.style.display = 'none';
+    els.pauseIcon.style.display = 'block';
+    els.vinyl.classList.add('playing'); 
+  };
+  els.audio.onpause = () => { 
+    els.playIcon.style.display = 'block';
+    els.pauseIcon.style.display = 'none';
+    els.vinyl.classList.remove('playing'); 
+  };
+  
+  els.audio.onloadedmetadata = () => {
+    els.totalTime.textContent = formatTime(els.audio.duration);
+  };
   
   els.audio.ontimeupdate = () => {
     if (!els.audio.duration) return;
     els.seek.value = Math.floor(100 * els.audio.currentTime / els.audio.duration);
+    els.currentTime.textContent = formatTime(els.audio.currentTime);
   };
   els.seek.oninput = () => {
     if (!els.audio.duration) return;

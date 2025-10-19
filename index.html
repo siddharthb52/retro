@@ -17,6 +17,7 @@
     <section class="player" aria-label="Player">
       <div class="vinyl" id="vinyl" aria-hidden="true">
         <img id="label" alt="record label" />
+        <div class="center-hole"></div>
       </div>
 
       <div class="meta">
@@ -25,10 +26,30 @@
       </div>
 
       <div class="controls">
-        <button id="prev" aria-label="Previous">⏮</button>
-        <button id="play" aria-label="Play/Pause">▶️</button>
-        <button id="next" aria-label="Next">⏭</button>
+        <button id="prev" aria-label="Previous">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
+          </svg>
+        </button>
+        <button id="play" aria-label="Play/Pause">
+          <svg id="play-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+          <svg id="pause-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+          </svg>
+        </button>
+        <button id="next" aria-label="Next">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
+          </svg>
+        </button>
+      </div>
+      
+      <div class="seek-container">
+        <span id="current-time">0:00</span>
         <input id="seek" type="range" min="0" max="100" value="0" aria-label="Seek">
+        <span id="total-time">0:00</span>
       </div>
 
       <audio id="audio" preload="metadata"></audio>
