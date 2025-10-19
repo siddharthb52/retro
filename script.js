@@ -4,25 +4,25 @@ const tracks = [
       title: "Every Night (1980) [Japanese AOR]",
       artist: "Mariya Takeuchi",
       src: "music/citypop/Mariya Takeuchi - Every Night (1980) [Japanese AOR].mp3",
-       cover: "assets/covers/miss-m.jpg"
+       vinyl: "assets/vinyl/miss-m.png"
     },
     {
       title: "Let's Groove",
       artist: "Earth, Wind & Fire",
       src: "music/oldies_usa/Let's Groove.mp3",
-      cover: "assets/covers/lets-groove.png"
+      vinyl: "assets/vinyl/lets-groove.png"
     },
     {
       title: "You Know How to Love Me (Long Version)",
       artist: "Phyllis Hyman",
       src: "music/oldies_usa/You Know How to Love Me (Long Version).mp3",
-      cover: "assets/covers/you-know-how-to-love-me.png"
+      vinyl: "assets/vinyl/you-know-how-to-love-me.png"
     },
     {
       title: "Ooh Baby Baby (12 Inch Version)",
       artist: "Zapp",
       src: "music/oldies_usa/Zapp - Ooh Baby Baby (12 Inch Version).mp3",
-      cover: "assets/covers/ooh-baby-baby-zapp.png"
+      vinyl: "assets/vinyl/ooh-baby-baby-zapp.png"
     }
   ];
   
@@ -40,7 +40,7 @@ const tracks = [
   };
 
   
-  const DEFAULT_LABEL = "assets/covers/oldies.png";
+  const DEFAULT_LABEL = "assets/vinyl/oldies.png";
 
   
   let i = 0;
@@ -59,7 +59,7 @@ const tracks = [
     els.audio.src = t.src;
     els.title.textContent = t.title;
     els.artist.textContent = t.artist;
-    els.label.src = t.cover || DEFAULT_LABEL;
+    els.label.src = t.vinyl || DEFAULT_LABEL;
   }
   
   function playIndex(n){

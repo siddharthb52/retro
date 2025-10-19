@@ -9,20 +9,14 @@ body{margin:0;background:#0b0b0b;color:var(--fg);font-family:system-ui,sans-seri
 #tracklist button:hover,#tracklist button:focus{background:#171717}
 
 .player{display:grid;gap:10px;align-content:start;justify-items:center}
-.vinyl{width:min(360px,80vw);aspect-ratio:1/1;border-radius:50%;
-  background:
-    radial-gradient(circle at 50% 50%, #3a3a3a 0 12%, transparent 12% 13%),
-    repeating-radial-gradient(circle at 50% 50%, #000 0 2px, #0a0a0a 2px 4px);
-  animation:spin 3.5s linear infinite paused; box-shadow:0 0 30px #0008 inset;
-}
-.vinyl.playing{animation-play-state:running}
 .meta{text-align:center}
 .controls{display:flex;gap:8px;align-items:center;justify-content:center}
 input[type="range"]{width:50%}
 @keyframes spin{to{transform:rotate(360deg)}}
+@keyframes counterSpin{to{transform:rotate(-360deg)}}
 
 body.has-bg {
-    background: #0b0b0b url("../assets/gradient-bg.png") center / cover fixed no-repeat;
+    background: #0b0b0b url("../assets/brown-bg.png") center / cover fixed no-repeat;
   }
   
   /* Vinyl container setup */
@@ -35,7 +29,10 @@ body.has-bg {
       radial-gradient(circle at 50% 50%, #3a3a3a 0 12%, transparent 12% 13%),
       repeating-radial-gradient(circle at 50% 50%, #000 0 2px, #0a0a0a 2px 4px);
     animation: spin 3.5s linear infinite paused;
-    box-shadow: 0 0 30px #0008 inset;
+    box-shadow: 
+      0 0 30px #0008 inset,
+      0 8px 25px rgba(0, 0, 0, 0.4),
+      0 4px 12px rgba(0, 0, 0, 0.2);
   }
   .vinyl.playing { animation-play-state: running; }
   
@@ -48,9 +45,51 @@ body.has-bg {
     border-radius: 50%;
     object-fit: cover;
     box-shadow: 0 0 18px #000a inset, 0 2px 10px #0006;
-    pointer-events: none; /* label shouldn’t block clicks */
+    pointer-events: none; /* label shouldn't block clicks */
+    z-index: 2;
   }
   
+  /* Stationary light shimmer effects */
+  .vinyl::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 50%;
+    background: 
+      /* First light reflection */
+      conic-gradient(
+        from 0deg,
+        transparent 0deg,
+        rgba(255,255,255,0.15) 20deg,
+        rgba(255,255,255,0.25) 40deg,
+        rgba(255,255,255,0.15) 60deg,
+        transparent 80deg,
+        transparent 360deg
+      ),
+      /* Second light reflection 180 degrees across */
+      conic-gradient(
+        from 180deg,
+        transparent 0deg,
+        rgba(255,255,255,0.15) 20deg,
+        rgba(255,255,255,0.25) 40deg,
+        rgba(255,255,255,0.15) 60deg,
+        transparent 80deg,
+        transparent 360deg
+      ),
+      /* Stationary shimmer rings - more visible */
+      radial-gradient(circle at 50% 50%, transparent 60%, rgba(255,255,255,0.12) 61%, transparent 62%),
+      radial-gradient(circle at 50% 50%, transparent 70%, rgba(255,255,255,0.08) 71%, transparent 72%),
+      radial-gradient(circle at 50% 50%, transparent 80%, rgba(255,255,255,0.06) 81%, transparent 82%);
+    pointer-events: none;
+    z-index: 1;
+    /* Counter-rotate to stay stationary while vinyl rotates */
+    animation: counterSpin 3.5s linear infinite paused;
+  }
+  
+  .vinyl.playing::before {
+    animation-play-state: running;
+  }
+
   /* Small center hole */
   .vinyl::after {
     content: "";
@@ -61,5 +100,6 @@ body.has-bg {
     background: #0a0a0a;
     border-radius: 50%;
     box-shadow: 0 0 4px #0008;
+    z-index: 3;
   }
   
