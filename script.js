@@ -23,6 +23,12 @@ const tracks = [
       artist: "Zapp",
       src: "music/oldies_usa/Zapp - Ooh Baby Baby (12 Inch Version).mp3",
       vinyl: "assets/vinyl/ooh-baby-baby-zapp.png"
+    },
+    {
+      title: "Cool It Now",
+      artist: "New Edition",
+      src: "music/oldies_usa/New Edition - Cool It Now.mp3",
+      vinyl: "assets/vinyl/cool-it-now.png"
     }
   ];
   
@@ -58,7 +64,7 @@ const tracks = [
   
   // Building a clickable list from the array above
   els.list.innerHTML = tracks.map((t, n) =>
-    `<button data-n="${n}">${t.title} — ${t.artist}</button>`).join('');
+    `<button data-n="${n}">${t.title} - ${t.artist}</button>`).join('');
   els.list.addEventListener('click', (e) => {
     const b = e.target.closest('button'); if (!b) return;
     playIndex(Number(b.dataset.n));
