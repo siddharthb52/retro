@@ -1,7 +1,7 @@
 // Exact file list:
 const tracks = [
     {
-      title: "Every Night (1980) [Japanese AOR]",
+      title: "Every Night",
       artist: "Mariya Takeuchi",
       src: "music/citypop/Mariya Takeuchi - Every Night (1980) [Japanese AOR].mp3",
        vinyl: "assets/vinyl/miss-m.png"
@@ -29,6 +29,12 @@ const tracks = [
       artist: "New Edition",
       src: "music/oldies_usa/New Edition - Cool It Now.mp3",
       vinyl: "assets/vinyl/cool-it-now.png"
+    },
+    {
+      title: "Surpise of Summer",
+      artist: "Anri",
+      src: "music/citypop/Anri - Surprise of Summer.mp3",
+      vinyl: "assets/vinyl/anri-timely.png"
     }
   ];
   
