@@ -1,43 +1,60 @@
-// Exact file list:
-const tracks = [
-    {
-      title: "Every Night",
-      artist: "Mariya Takeuchi",
-      src: "music/citypop/Mariya Takeuchi - Every Night (1980) [Japanese AOR].mp3",
-       vinyl: "assets/vinyl/miss-m.png"
-    },
-    {
-      title: "Let's Groove",
-      artist: "Earth, Wind & Fire",
-      src: "music/oldies_usa/Let's Groove.mp3",
-      vinyl: "assets/vinyl/lets-groove.png"
-    },
-    {
-      title: "You Know How to Love Me (Long Version)",
-      artist: "Phyllis Hyman",
-      src: "music/oldies_usa/You Know How to Love Me (Long Version).mp3",
-      vinyl: "assets/vinyl/you-know-how-to-love-me.png"
-    },
-    {
-      title: "Ooh Baby Baby (12 Inch Version)",
-      artist: "Zapp",
-      src: "music/oldies_usa/Zapp - Ooh Baby Baby (12 Inch Version).mp3",
-      vinyl: "assets/vinyl/ooh-baby-baby-zapp.png"
-    },
-    {
-      title: "Cool It Now",
-      artist: "New Edition",
-      src: "music/oldies_usa/New Edition - Cool It Now.mp3",
-      vinyl: "assets/vinyl/cool-it-now.png"
-    },
-    {
-      title: "Surpise of Summer",
-      artist: "Anri",
-      src: "music/citypop/Anri - Surprise of Summer.mp3",
-      vinyl: "assets/vinyl/anri-timely.png"
-    }
-  ];
+// Scene-based music library
+const scenes = {
+  citypop: {
+    name: "City Pop",
+    background: "assets/wood2-bg.png",
+    tracks: [
+      {
+        title: "Every Night",
+        artist: "Mariya Takeuchi",
+        src: "music/citypop/Mariya Takeuchi - Every Night (1980) [Japanese AOR].mp3",
+        vinyl: "assets/vinyl/miss-m.png"
+      },
+      {
+        title: "Surprise of Summer",
+        artist: "Anri",
+        src: "music/citypop/Anri - Surprise of Summer.mp3",
+        vinyl: "assets/vinyl/anri-timely.png"
+      }
+    ]
+  },
+  oldies: {
+    name: "Oldies",
+    background: "assets/brown-bg.png",
+    tracks: [
+      {
+        title: "Let's Groove",
+        artist: "Earth, Wind & Fire",
+        src: "music/oldies_usa/Let's Groove.mp3",
+        vinyl: "assets/vinyl/lets-groove.png"
+      },
+      {
+        title: "You Know How to Love Me (Long Version)",
+        artist: "Phyllis Hyman",
+        src: "music/oldies_usa/You Know How to Love Me (Long Version).mp3",
+        vinyl: "assets/vinyl/you-know-how-to-love-me.png"
+      },
+      {
+        title: "Ooh Baby Baby (12 Inch Version)",
+        artist: "Zapp",
+        src: "music/oldies_usa/Zapp - Ooh Baby Baby (12 Inch Version).mp3",
+        vinyl: "assets/vinyl/ooh-baby-baby-zapp.png"
+      },
+      {
+        title: "Cool It Now",
+        artist: "New Edition",
+        src: "music/oldies_usa/New Edition - Cool It Now.mp3",
+        vinyl: "assets/vinyl/cool-it-now.png"
+      }
+    ]
+  }
+};
+
+// Current scene and track management
+let currentScene = 'citypop';
+let currentTrackIndex = 0;
   
+  // Definition of elements on screen
   const els = {
     list: document.querySelector('#tracklist'),
     audio: document.querySelector('#audio'),
@@ -53,10 +70,12 @@ const tracks = [
     totalTime: document.querySelector('#total-time'),
     playIcon: document.querySelector('#play-icon'),
     pauseIcon: document.querySelector('#pause-icon'),
+    sceneButtons: document.querySelectorAll('.scene-btn'),
+    body: document.body,
   };
 
-  
-  const DEFAULT_LABEL = "assets/vinyl/oldies.png";
+  // Default vinyl cover
+  const DEFAULT_VINYL = "assets/vinyl/oldies.png";
 
   // Time formatting function
   function formatTime(seconds) {
@@ -65,39 +84,89 @@ const tracks = [
     const secs = Math.floor(seconds % 60);
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   }
+
+  // Scene management functions
+  function switchScene(sceneId) {
+    if (!scenes[sceneId]) return;
+    
+    // Stop current audio and vinyl rotation
+    els.audio.pause();
+    els.vinyl.classList.remove('playing');
+    
+    // Update play/pause button to show play icon
+    els.playIcon.style.display = 'block';
+    els.pauseIcon.style.display = 'none';
+    
+    currentScene = sceneId;
+    currentTrackIndex = 0;
+    
+    // Update background
+    const scene = scenes[sceneId];
+    els.body.style.background = `#0b0b0b url("../${scene.background}") center / cover fixed no-repeat`;
+    
+    // Update scene buttons
+    els.sceneButtons.forEach(btn => {
+      btn.classList.remove('active');
+      if (btn.dataset.scene === sceneId) {
+        btn.classList.add('active');
+      }
+    });
+    
+    // Update track list
+    updateTrackList();
+    
+    // Load first track of new scene (but don't play it)
+    loadTrack(0);
+  }
+
+  function updateTrackList() {
+    const tracks = scenes[currentScene].tracks;
+    els.list.innerHTML = tracks.map((t, n) =>
+      `<button data-n="${n}">${t.title} — ${t.artist}</button>`).join('');
+  }
+
+  function getCurrentTracks() {
+    return scenes[currentScene].tracks;
+  }
   
-  let i = 0;
-  
-  // Building a clickable list from the array above
-  els.list.innerHTML = tracks.map((t, n) =>
-    `<button data-n="${n}">${t.title} - ${t.artist}</button>`).join('');
+  // Initialize track list and event listeners
+  updateTrackList();
   els.list.addEventListener('click', (e) => {
     const b = e.target.closest('button'); if (!b) return;
-    playIndex(Number(b.dataset.n));
+    playTrack(Number(b.dataset.n));
   });
   
-  function load(n){
-    i = (n + tracks.length) % tracks.length;
-    const t = tracks[i];
+  // Scene button event listeners
+  els.sceneButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      switchScene(btn.dataset.scene);
+    });
+  });
+  
+  // Loading the track at index n (wrap around if n is out of bounds)
+  function loadTrack(n){
+    const tracks = getCurrentTracks();
+    currentTrackIndex = (n + tracks.length) % tracks.length;
+    const t = tracks[currentTrackIndex];
     els.audio.src = t.src;
     els.title.textContent = t.title;
     els.artist.textContent = t.artist;
-    els.label.src = t.vinyl || DEFAULT_LABEL;
+    els.label.src = t.vinyl || DEFAULT_VINYL;
     
     // Reset time display
     els.currentTime.textContent = '0:00';
     els.totalTime.textContent = '0:00';
   }
   
-  function playIndex(n){
-    load(n);
+  function playTrack(n){
+    loadTrack(n);
     els.audio.play();
   }
   
   // Controls
   els.play.onclick = () => els.audio.paused ? els.audio.play() : els.audio.pause();
-  els.prev.onclick = () => playIndex(i - 1);
-  els.next.onclick = () => playIndex(i + 1);
+  els.prev.onclick = () => playTrack(currentTrackIndex - 1);
+  els.next.onclick = () => playTrack(currentTrackIndex + 1);
   
   // UI reactions
   els.audio.onplay = () => { 
@@ -135,7 +204,10 @@ const tracks = [
     if (k === 'p') els.prev.click();
   });
   
-  // Load first song (don’t autoplay)
-  load(0);
+  // Load first song (don't autoplay)
+  loadTrack(0);
+  
+  // Initialize with first scene
+  switchScene('citypop');
   
   document.body.classList.add('has-bg');

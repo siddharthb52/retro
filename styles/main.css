@@ -1,0 +1,344 @@
+/* ========================================
+   RETRO JUKEBOX - MAIN STYLES
+   ======================================== */
+
+/* CSS Variables */
+:root { 
+  --bg: #0b0b0b; 
+  --fg: #f5efe6; 
+}
+
+/* Reset and Base Styles */
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: #0b0b0b;
+  color: var(--fg);
+  font-family: system-ui, sans-serif;
+}
+
+/* ========================================
+   LAYOUT & GRID SYSTEM
+   ======================================== */
+
+.appbar {
+  padding: 12px 16px;
+  border-bottom: 1px solid #222;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 260px 1fr 300px;
+  gap: 12px;
+  padding: 12px;
+}
+
+@media (max-width: 1200px) {
+  .layout { grid-template-columns: 260px 1fr; }
+}
+
+@media (max-width: 800px) {
+  .layout { grid-template-columns: 1fr; }
+}
+
+/* ========================================
+   SIDEBAR & TRACK LIST
+   ======================================== */
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#tracklist {
+  border: 1px solid #222;
+  border-radius: 12px;
+  overflow: auto;
+  flex: 1;
+}
+
+#tracklist button {
+  width: 100%;
+  text-align: left;
+  padding: 10px 12px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+#tracklist button:hover,
+#tracklist button:focus {
+  background: #171717;
+}
+
+/* ========================================
+   SCENE SELECTOR
+   ======================================== */
+
+.scene-selector {
+  border: 1px solid #222;
+  border-radius: 12px;
+  padding: 12px;
+  background: #111;
+}
+
+.scene-selector h3 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.scene-buttons {
+  display: flex;
+  gap: 6px;
+}
+
+.scene-btn {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #333;
+  border-radius: 6px;
+  background: #222;
+  color: #f5efe6;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.2s ease;
+}
+
+.scene-btn:hover {
+  background: #333;
+  border-color: #555;
+}
+
+.scene-btn.active {
+  background: #444;
+  border-color: #666;
+  color: #fff;
+}
+
+/* ========================================
+   PLAYER SECTION
+   ======================================== */
+
+.player {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+  justify-items: center;
+}
+
+.meta {
+  text-align: center;
+}
+
+/* ========================================
+   CONTROL BUTTONS
+   ======================================== */
+
+.controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+}
+
+.controls button {
+  background: #222;
+  border: 1px solid #444;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f5efe6;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.controls button:hover {
+  background: #333;
+  border-color: #666;
+  transform: scale(1.05);
+}
+
+.controls button:active {
+  transform: scale(0.95);
+}
+
+/* ========================================
+   SEEK BAR & TIME DISPLAY
+   ======================================== */
+
+.seek-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.seek-container span {
+  font-family: monospace;
+  font-size: 14px;
+  color: #888;
+  min-width: 40px;
+  text-align: center;
+}
+
+input[type="range"] {
+  flex: 1;
+  height: 6px;
+  background: #333;
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #f5efe6;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: #f5efe6;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+}
+
+/* ========================================
+   VINYL & ANIMATIONS
+   ======================================== */
+
+.vinyl {
+  position: relative;
+  width: min(360px, 80vw);
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%, #3a3a3a 0 12%, transparent 12% 13%),
+    repeating-radial-gradient(circle at 50% 50%, #000 0 2px, #0a0a0a 2px 4px);
+  animation: spin 3.5s linear infinite paused;
+  box-shadow: 0 0 30px #0008 inset;
+}
+
+.vinyl.playing { 
+  animation-play-state: running; 
+}
+
+.vinyl.playing::before { 
+  animation-play-state: running; 
+}
+
+.vinyl::before { 
+  animation-play-state: paused; 
+}
+
+/* Label image in the center of the record */
+#label {
+  position: absolute;
+  left: 50%; 
+  top: 50%;
+  width: 50%; 
+  height: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 18px #000a inset, 0 2px 10px #0006;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Stationary light shimmer effects */
+.vinyl::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: 50%;
+  background: 
+    /* First light reflection */
+    conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      rgba(255,255,255,0.15) 20deg,
+      rgba(255,255,255,0.25) 40deg,
+      rgba(255,255,255,0.15) 60deg,
+      transparent 80deg,
+      transparent 360deg
+    ),
+    /* Second light reflection 180 degrees across */
+    conic-gradient(
+      from 180deg,
+      transparent 0deg,
+      rgba(255,255,255,0.15) 20deg,
+      rgba(255,255,255,0.25) 40deg,
+      rgba(255,255,255,0.15) 60deg,
+      transparent 80deg,
+      transparent 360deg
+    ),
+    /* Stationary shimmer rings - more visible */
+    radial-gradient(circle at 50% 50%, transparent 60%, rgba(255,255,255,0.12) 61%, transparent 62%),
+    radial-gradient(circle at 50% 50%, transparent 70%, rgba(255,255,255,0.08) 71%, transparent 72%),
+    radial-gradient(circle at 50% 50%, transparent 80%, rgba(255,255,255,0.06) 81%, transparent 82%);
+  pointer-events: none;
+  z-index: 1;
+  /* Counter-rotate to stay stationary while vinyl rotates */
+  animation: counterSpin 3.5s linear infinite paused;
+}
+
+/* Static shadow that doesn't rotate */
+.vinyl::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.4),
+    0 4px 12px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Small center hole - using a separate element */
+.vinyl .center-hole {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 12px; height: 12px;
+  transform: translate(-50%, -50%);
+  background: #0a0a0a;
+  border-radius: 50%;
+  box-shadow: 0 0 4px #0008;
+  z-index: 3;
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes counterSpin {
+  to { transform: rotate(-360deg); }
+}
+
+/* ========================================
+   BACKGROUND
+   ======================================== */
+
+body.has-bg {
+  background: #0b0b0b url("../assets/wood2-bg.png") center / cover fixed no-repeat;
+}

@@ -2,9 +2,52 @@
 *{box-sizing:border-box}
 body{margin:0;background:#0b0b0b;color:var(--fg);font-family:system-ui,sans-serif}
 .appbar{padding:12px 16px;border-bottom:1px solid #222}
-.layout{display:grid;grid-template-columns:260px 1fr;gap:12px;padding:12px}
+.layout{display:grid;grid-template-columns:260px 1fr 300px;gap:12px;padding:12px}
+@media (max-width:1200px){.layout{grid-template-columns:260px 1fr}}
 @media (max-width:800px){.layout{grid-template-columns:1fr}}
-#tracklist{border:1px solid #222;border-radius:12px;overflow:auto}
+.sidebar{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.scene-selector{
+  border:1px solid #222;
+  border-radius:12px;
+  padding:12px;
+  background:#111;
+}
+.scene-selector h3{
+  margin:0 0 8px 0;
+  font-size:14px;
+  color:#888;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+.scene-buttons{
+  display:flex;
+  gap:6px;
+}
+.scene-btn{
+  flex:1;
+  padding:8px 12px;
+  border:1px solid #333;
+  border-radius:6px;
+  background:#222;
+  color:#f5efe6;
+  cursor:pointer;
+  font-size:12px;
+  transition:all 0.2s ease;
+}
+.scene-btn:hover{
+  background:#333;
+  border-color:#555;
+}
+.scene-btn.active{
+  background:#444;
+  border-color:#666;
+  color:#fff;
+}
+#tracklist{border:1px solid #222;border-radius:12px;overflow:auto;flex:1}
 #tracklist button{width:100%;text-align:left;padding:10px 12px;border:0;background:transparent;color:inherit;cursor:pointer}
 #tracklist button:hover,#tracklist button:focus{background:#171717}
 
@@ -70,6 +113,127 @@ input[type="range"]::-moz-range-thumb{
   border:none;
   cursor:pointer;
 }
+
+/* Album Information Section */
+.album-info{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  border:1px solid #222;
+  border-radius:12px;
+  padding:16px;
+  background:#111;
+  overflow-y:auto;
+}
+
+.album-cover-container{
+  display:flex;
+  justify-content:center;
+  margin-bottom:8px;
+}
+
+.album-cover-placeholder{
+  width:200px;
+  height:200px;
+  border:2px dashed #444;
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#666;
+  font-size:14px;
+  background:#0a0a0a;
+}
+
+.album-details{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.placeholder-content{
+  color:#888;
+  font-size:14px;
+  line-height:1.5;
+}
+
+.placeholder-content h3{
+  color:#f5efe6;
+  margin:0 0 8px 0;
+  font-size:16px;
+}
+
+.placeholder-content ul{
+  margin:8px 0;
+  padding-left:20px;
+}
+
+.placeholder-content li{
+  margin:4px 0;
+}
+
+/* TODO: Future album info styling */
+/* 
+.album-cover-container img{
+  width:200px;
+  height:200px;
+  border-radius:8px;
+  object-fit:cover;
+}
+
+.album-title{
+  font-size:18px;
+  font-weight:bold;
+  color:#f5efe6;
+  margin:0;
+}
+
+.album-artist{
+  font-size:16px;
+  color:#ccc;
+  margin:4px 0;
+}
+
+.album-year{
+  font-size:14px;
+  color:#888;
+  margin:4px 0;
+}
+
+.album-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin:8px 0;
+}
+
+.tag{
+  background:#333;
+  color:#f5efe6;
+  padding:4px 8px;
+  border-radius:4px;
+  font-size:12px;
+}
+
+.personal-notes{
+  margin-top:16px;
+  padding-top:16px;
+  border-top:1px solid #333;
+}
+
+.personal-notes h4{
+  color:#f5efe6;
+  margin:0 0 8px 0;
+  font-size:14px;
+}
+
+.personal-notes p{
+  color:#ccc;
+  font-size:14px;
+  line-height:1.5;
+  margin:0;
+}
+*/
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes counterSpin{to{transform:rotate(-360deg)}}
 
