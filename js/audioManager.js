@@ -1,5 +1,5 @@
 // Audio management module
-import { DEFAULT_VINYL } from '../data/scenes.js';
+import { DEFAULT_LABEL } from '../data/scenes.js';
 import { formatTime, updatePlayButton, updateVinylRotation } from './utils.js';
 
 /**
@@ -25,7 +25,7 @@ export class AudioManager {
     this.els.audio.src = track.src;
     this.els.title.textContent = track.title;
     this.els.artist.textContent = track.artist;
-    this.els.label.src = track.vinyl || DEFAULT_VINYL;
+    this.els.label.src = track.label || DEFAULT_LABEL;
     
     // Reset time display
     this.els.currentTime.textContent = '0:00';
