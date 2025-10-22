@@ -58,7 +58,7 @@ export class SceneManager {
   updateTrackList() {
     const tracks = this.getCurrentTracks();
     this.els.list.innerHTML = tracks.map((t, n) =>
-      `<button data-n="${n}">${t.title} — ${t.artist}</button>`).join('');
+      `<button data-n="${n}">${t.title} - ${t.artist}</button>`).join('');
   }
 
   /**
