@@ -15,6 +15,18 @@ export const scenes = {
         artist: "Anri",
         src: "music/citypop/Anri - Surprise of Summer.mp3",
         label: "assets/labels/anri-timely.png"
+      },
+      {
+        title: "Stay with Me",
+        artist: "Miki Matsubara",
+        src: "music/citypop/Miki Matsubara - Stay with Me.mp3",
+        label: "assets/labels/miki-pocket-park.PNG"
+      },
+      {
+        title: "Remember Summer Days",
+        artist: "Anri",
+        src: "music/citypop/Anri- Remember Summer Days.mp3",
+        label: "assets/labels/anri-remember.PNG"
       }
     ]
   },

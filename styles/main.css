@@ -34,8 +34,23 @@ body {
   position: fixed;
   top: 12px;
   left: 12px;
-  background: #0b0b0b;
+  background: transparent;
   z-index: 10;
+}
+
+.appbar h1 {
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #f5efe6;
+  text-shadow: 
+    0 0 5px #f5efe6,
+    0 0 10px #f5efe6,
+    0 0 15px #d4af37,
+    0 0 20px #d4af37;
+  font-size: 35px;
+  margin: 0;
 }
 
 .layout {
@@ -211,7 +226,7 @@ body {
 input[type="range"] {
   flex: 1;
   height: 6px;
-  background: #333;
+  background: #592727;
   border-radius: 3px;
   outline: none;
   cursor: pointer;
@@ -221,7 +236,7 @@ input[type="range"]::-webkit-slider-thumb {
   appearance: none;
   width: 16px;
   height: 16px;
-  background: #f5efe6;
+  background: #11824f;
   border-radius: 50%;
   cursor: pointer;
 }
