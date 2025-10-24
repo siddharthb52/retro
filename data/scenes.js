@@ -63,6 +63,12 @@ export const scenes = {
         artist: "New Edition",
         src: "music/oldies_usa/New Edition - Cool It Now.mp3",
         label: "assets/labels/cool-it-now.png"
+      },
+      {
+        title: "I Like It",
+        artist: "DeBarge",
+        src: "music/oldies_usa/DeBarge - I Like It.mp3",
+        label: "assets/labels/debarge-I-like-it.png"
       }
     ]
   }
