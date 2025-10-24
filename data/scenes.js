@@ -27,6 +27,12 @@ export const scenes = {
         artist: "Anri",
         src: "music/citypop/Anri- Remember Summer Days.mp3",
         label: "assets/labels/anri-remember.PNG"
+      },
+      {
+        title: "Miami Dream",
+        artist: "Meiko Nakahara",
+        src: "music/citypop/Meiko Nakahara - Miami Dream (Don't be shy).mp3",
+        label: "assets/labels/meiko-on-the-planet.png"
       }
     ]
   },
