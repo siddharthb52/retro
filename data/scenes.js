@@ -33,6 +33,12 @@ export const scenes = {
         artist: "Meiko Nakahara",
         src: "music/citypop/Meiko Nakahara - Miami Dream (Don't be shy).mp3",
         label: "assets/labels/meiko-on-the-planet.png"
+      },
+      {
+        title: "Sundrops",
+        artist: "Masayoshi Takanaka",
+        src: "music/citypop/Masayoshi Takanaka - Sundrops.mp3",
+        label: "assets/labels/masayoshi-insatiable-b.png"
       }
     ]
   },
