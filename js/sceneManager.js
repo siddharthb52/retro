@@ -8,7 +8,7 @@ export class SceneManager {
   constructor(els, audioManager) {
     this.els = els;
     this.audioManager = audioManager;
-    this.currentScene = 'citypop';
+    this.currentScene = 'oldies';
     this.currentTrackIndex = 0;
   }
 
@@ -104,6 +104,6 @@ export class SceneManager {
     });
 
     // Initialize with first scene
-    this.switchScene('citypop');
+    this.switchScene('oldies');
   }
 }
