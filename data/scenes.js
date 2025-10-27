@@ -1,5 +1,47 @@
 // Scene-based music library data
 export const scenes = {
+  oldies: {
+    name: "Oldies",
+    background: "assets/brown-bg.png",
+    tracks: [
+      {
+        title: "Let's Groove",
+        artist: "Earth, Wind & Fire",
+        src: "music/oldies_usa/Let's Groove.mp3",
+        label: "assets/labels/lets-groove.png"
+      },
+      {
+        title: "You Know How to Love Me (Long Version)",
+        artist: "Phyllis Hyman",
+        src: "music/oldies_usa/You Know How to Love Me (Long Version).mp3",
+        label: "assets/labels/you-know-how-to-love-me.png"
+      },
+      {
+        title: "Ooh Baby Baby (12 Inch Version)",
+        artist: "Zapp",
+        src: "music/oldies_usa/Zapp - Ooh Baby Baby (12 Inch Version).mp3",
+        label: "assets/labels/ooh-baby-baby-zapp.png"
+      },
+      {
+        title: "Cool It Now",
+        artist: "New Edition",
+        src: "music/oldies_usa/New Edition - Cool It Now.mp3",
+        label: "assets/labels/cool-it-now.png"
+      },
+      {
+        title: "I Like It",
+        artist: "DeBarge",
+        src: "music/oldies_usa/DeBarge - I Like It.mp3",
+        label: "assets/labels/debarge-I-like-it.png"
+      },
+      {
+        title: "Heaven Must Be Missing An Angel",
+        artist: "Tavares",
+        src: "music/oldies_usa/Tavares - Heaven Must Be Missing An Angel.mp3",
+        label: "assets/labels/tavares-sky-high.png"
+      }
+    ]
+  },
   citypop: {
     name: "City Pop",
     background: "assets/wood2-bg.png",
@@ -39,42 +81,6 @@ export const scenes = {
         artist: "Masayoshi Takanaka",
         src: "music/citypop/Masayoshi Takanaka - Sundrops.mp3",
         label: "assets/labels/masayoshi-insatiable-b.png"
-      }
-    ]
-  },
-  oldies: {
-    name: "Oldies",
-    background: "assets/brown-bg.png",
-    tracks: [
-      {
-        title: "Let's Groove",
-        artist: "Earth, Wind & Fire",
-        src: "music/oldies_usa/Let's Groove.mp3",
-        label: "assets/labels/lets-groove.png"
-      },
-      {
-        title: "You Know How to Love Me (Long Version)",
-        artist: "Phyllis Hyman",
-        src: "music/oldies_usa/You Know How to Love Me (Long Version).mp3",
-        label: "assets/labels/you-know-how-to-love-me.png"
-      },
-      {
-        title: "Ooh Baby Baby (12 Inch Version)",
-        artist: "Zapp",
-        src: "music/oldies_usa/Zapp - Ooh Baby Baby (12 Inch Version).mp3",
-        label: "assets/labels/ooh-baby-baby-zapp.png"
-      },
-      {
-        title: "Cool It Now",
-        artist: "New Edition",
-        src: "music/oldies_usa/New Edition - Cool It Now.mp3",
-        label: "assets/labels/cool-it-now.png"
-      },
-      {
-        title: "I Like It",
-        artist: "DeBarge",
-        src: "music/oldies_usa/DeBarge - I Like It.mp3",
-        label: "assets/labels/debarge-I-like-it.png"
       }
     ]
   }
