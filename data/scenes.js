@@ -39,6 +39,12 @@ export const scenes = {
         artist: "Tavares",
         src: "music/oldies_usa/Tavares - Heaven Must Be Missing An Angel.mp3",
         label: "assets/labels/tavares-sky-high.png"
+      },
+      {
+        title: "Can't Let Go",
+        artist: "Earth, Wind & Fire",
+        src: "music/oldies_usa/Earth, Wind & Fire - Can't Let Go.mp3",
+        label: "assets/labels/ewf-I-am.png"
       }
     ]
   },
