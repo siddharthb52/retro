@@ -29,6 +29,7 @@ A nostalgic web-based music player with a retro vinyl record aesthetic. Switch b
    ```bash
    # Python 3
    python -m http.server 8000
+   ```
    
    **Using Node.js (http-server):**
    ```bash
