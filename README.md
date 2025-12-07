@@ -12,6 +12,9 @@ A nostalgic web-based music player with a retro vinyl record aesthetic. Switch b
 - **Dynamic Backgrounds**: Each genre has its own themed background
 - **Custom Record Labels**: Each track displays its unique album artwork on the vinyl
 
+  <img width="1433" height="856" alt="image" src="https://github.com/user-attachments/assets/c5809316-5be6-4de1-a843-1b06e3e16ace" />
+
+
 ## Getting Started
 
 ### Prerequisites
