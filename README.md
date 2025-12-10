@@ -6,10 +6,8 @@ A nostalgic web-based music player with a retro vinyl record aesthetic. Switch b
 
 - **Dual Genre Support**: Switch between Oldies (USA) and City Pop (Japanese) music scenes
 - **Retro Aesthetic**: Beautiful vinyl record visualization that rotates during playback
-- **Full Playback Controls**: Play, pause, previous, next, and seek functionality
 - **Keyboard Shortcuts**: Control playback with convenient keyboard commands
 - **Interactive Track List**: Click any track to play it instantly
-- **Dynamic Backgrounds**: Each genre has its own themed background
 - **Custom Record Labels**: Each track displays its unique album artwork on the vinyl
 
   <img width="1433" height="856" alt="image" src="https://github.com/user-attachments/assets/c5809316-5be6-4de1-a843-1b06e3e16ace" />
